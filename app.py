@@ -1,28 +1,20 @@
 import streamlit as st
-import mysql.connector
+from gsheetsdb import connect
 
-# Initialize connection.
-# Uses st.experimental_singleton to only run once.
-@st.experimental_singleton
-def init_connection():
-    return mysql.connector.connect(user=st.secrets['user'], 
-                                   password=st.secrets['password'], 
-                                   host=st.secrets['host'], 
-                                   database=st.secrets['database']
-                                  )
+# Create a connection object.
+conn = connect()
 
-conn = init_connection()
-
-# Perform query.
-# Uses st.experimental_memo to only rerun when the query changes or after 10 min.
-@st.experimental_memo(ttl=600)
+# Perform SQL query on the Google Sheet.
+# Uses st.cache to only rerun when the query changes or after 10 min.
+@st.cache(ttl=600)
 def run_query(query):
-    with conn.cursor() as cur:
-        cur.execute(query)
-        return cur.fetchall()
+    rows = conn.execute(query, headers=1)
+    rows = rows.fetchall()
+    return rows
 
-rows = run_query("SELECT * from mytable;")
+sheet_url = st.secrets["public_gsheets_url"]
+rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
 # Print results.
 for row in rows:
-    st.write(f"{row[0]} has a :{row[1]}:")
+    st.write(f"{row.party} has a :{row.i_am}:")
