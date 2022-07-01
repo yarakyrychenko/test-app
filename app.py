@@ -25,7 +25,6 @@ st.session_state.username_mine = st.radio(
 
 
 st.session_state.last_name = ""
-st.session_state.open_form = True
 st.session_state.submitted = False
 st.session_state.disable = True 
 st.session_state.last_username_mine = ""
@@ -34,7 +33,7 @@ st.session_state.last_username_mine = ""
 if st.session_state.name != "":  
     st.session_state.last_username_mine = st.session_state.username_mine
     if st.session_state.username_mine == 'This username belongs to me.':
-        if st.session_state.open_form:
+        if not st.session_state.submitted:
             with st.container():
                 dem_words, rep_words = [], []
                 st.markdown("#### Please add five words that describe Democrats best")
@@ -58,13 +57,12 @@ if st.session_state.name != "":
                 st.session_state.disable = True if st.session_state.R5 == "" else False
 
                 def submit():
-                    st.session_state.open_form = False
                     st.session_state.submitted = True 
  
                 st.warning("Please fill out every field of the form to enable the submit button.")              
                 st.button("Submit", on_click=submit, disabled=st.session_state.disable)
 
-        else:
+        if st.session_state.submitted:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
             st.success("Thanks for submitting your answers!")
             st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
@@ -84,7 +82,7 @@ if st.session_state.name != "":
             
            
     
-    elif st.session_state.username_mine == 'This username is belongs to someone else.':
+    if st.session_state.username_mine == 'This username is belongs to someone else.':
         st.session_state.conn = connect(":memory:", 
                     adapter_kwargs = {
                         "gsheetsapi": { 
