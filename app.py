@@ -14,9 +14,9 @@ st.warning("""
            You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
            """)
 
-container = st.beta_container()
+container = st.container()
 st.sidebar.write("Hello")
-expander = st.beta_expander("Expand me")
+expander = st.expander("Expand me")
 with expander:
     st.write("Oh noes")
    
