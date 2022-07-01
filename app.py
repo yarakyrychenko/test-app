@@ -30,7 +30,7 @@ if "last_name" not in st.session_state:
     st.session_state.open_form = True
     st.session_state.rep_words = ", , , , , "
     st.session_state.submitted = False
-    st.session_state.disable = True if (st.session_state.rep_words[-2:] != ", ") else False   
+    st.session_state.disable = True if (st.session_state.rep_words[-2:] == ", ") else False   
  
 
 if st.session_state.last_name != st.session_state.name:  
@@ -39,8 +39,6 @@ if st.session_state.last_name != st.session_state.name:
         if st.session_state.open_form:
             st.session_state.rep_words = ", , , , , "
             with st.container():
-                st.warning("Please fill out every field of the form to enable the submit button.")
-
                 dem_words, rep_words = [], []
                 st.markdown("#### Please add five words that describe Democrats best")
                 for i in range(5):
