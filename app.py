@@ -29,7 +29,7 @@ if "last_name" not in st.session_state:
     st.session_state.last_name = ""
     st.session_state.open_form = True
     st.session_state.submitted = False
-    st.session_state.all_filled = False 
+    st.session_state.disable = True 
  
 
 if st.session_state.last_name != st.session_state.name:  
@@ -56,15 +56,14 @@ if st.session_state.last_name != st.session_state.name:
                 st.session_state.party = st.radio(
                      "How do you identify?",
                     ('Independant','Republican', 'Democrat')) 
-                st.session_state.all_filled = True if st.session_state.R5 != "" else False
-                st.write(st.session_state.all_filled)
+                st.session_state.disable = True if st.session_state.R5 == "" else False
 
                 def submit():
                     st.session_state.open_form = False
                     st.session_state.submitted = True 
  
                 st.warning("Please fill out every field of the form to enable the submit button.")              
-                st.button("Submit", on_click=submit, disabled=st.session_state.all_filled)
+                st.button("Submit", on_click=submit, disabled=st.session_state.disable)
 
         else:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
