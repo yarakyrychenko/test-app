@@ -75,9 +75,10 @@ if st.session_state.last_name != st.session_state.name:
                     else:
                         with container:
                             st.warning("Please fill out every field of the form and submit again.")
-                     
+
+                container = st.container()     
                 st.form_submit_button("Submit", on_click=submit)
-                container = st.container() 
+                 
 
     
     elif st.session_state.username_mine == 'This username is belongs to someone else.':
