@@ -60,12 +60,15 @@ if st.session_state.last_name != st.session_state.name:
                      "How do you identify?",
                     ('Independant','Republican', 'Democrat')) 
 
+                    st.session_state.submitted = st.form_submit_button("Submit")
                     if (st.session_state.rep_words[-2:] != ", "):
-                        st.session_state.submitted = st.form_submit_button("Submit")
                         st.session_state.open_form = False
+                    else:
+                        st.error("Please fill out every field of the form and submit again.")
+    
             
 
-    if st.session_state.submitted:
+    if st.session_state.submitted and not st.session_state.open_form:
         from helper import connect_to_gsheets, insert_user_data
         from datetime import datetime
         from uuid import uuid4
@@ -89,9 +92,6 @@ if st.session_state.last_name != st.session_state.name:
         st.markdown(f"👉 Click 'Linguistic Analysis' to find out what language {st.session_state.name} and others use on Twitter.")
         st.markdown(f"👉 Click 'Polarization' to find out how {st.session_state.name} and others think and talk about the US political parties.")
                         
-
-    else:
-        st.error("Please fill out every field of the form first.")
 
     if st.session_state.username_mine == 'This username is belongs to someone else.' and st.session_state.name != "":
         st.session_state.conn = connect(":memory:", 
