@@ -19,13 +19,14 @@ st.text_input("Enter a twitter username to begin", key="name")
 if "last_name" not in st.session_state:
         st.session_state.last_name = ""
 
-if st.session_state.last_name != st.session_state.name:    
+if st.session_state.last_name != st.session_state.name:     
 
-    with st.expander("Form", expanded=True): 
-
-        st.session_state.username_mine = st.radio(
+    st.session_state.username_mine = st.radio(
             "I confirm that",
             ('This username belongs to me.', 'This username is belongs to someone else.')) 
+    
+    container = st.container()
+    with st.expander("Form", expanded=True):
 
         if st.session_state.username_mine == 'This username belongs to me.':
 
@@ -53,7 +54,8 @@ if st.session_state.last_name != st.session_state.name:
     
                 st.session_state.submitted = st.form_submit_button("Submit")
     
-            if st.session_state.submitted:
+        if st.session_state.submitted:
+            with container:
                 if (st.session_state.rep_words[-2:] != ", "):
                     from helper import connect_to_gsheets, insert_user_data
                     from datetime import datetime
@@ -77,6 +79,7 @@ if st.session_state.last_name != st.session_state.name:
                     with st.sidebar:
                         st.markdown(f"👉 Click 'Linguistic Analysis' to find out what language {st.session_state.name} and others use on Twitter.")
                         st.markdown(f"👉 Click 'Polarization' to find out how {st.session_state.name} and others think and talk about the US political parties.")
+                        
 
                 else:
                     st.error("Please fill out every field and try again.")
