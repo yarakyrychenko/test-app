@@ -62,7 +62,7 @@ if st.session_state.name != "":
                 st.warning("Please fill out every field of the form to enable the submit button.")              
                 st.button("Submit", on_click=submit, disabled=st.session_state.disable)
 
-        if st.session_state.submitted:
+        else:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
             st.success("Thanks for submitting your answers!")
             st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
