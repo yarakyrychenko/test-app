@@ -61,12 +61,12 @@ if st.session_state.last_name != st.session_state.name:
                 def submit():
                     if (st.session_state.rep_words[-2:] != ", "):
                         st.session_state.open_form = False
-                        st.session_state.last_name = st.session_state.name
                         st.session_state.submitted = True   
                     else:
                         st.error("Please fill out every field of the form and submit again.")
                                 
                 st.button("Submit", on_click=submit)
+
         if not st.session_state.open_form:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
             st.success("Thanks for submitting your answers!")
@@ -80,6 +80,7 @@ if st.session_state.last_name != st.session_state.name:
                                         }
                         )
             #insert_user_data(conn, st.secrets["private_gsheets_url"])
+            st.session_state.last_name = st.session_state.name
            
     
     elif st.session_state.username_mine == 'This username is belongs to someone else.':
@@ -94,6 +95,7 @@ if st.session_state.last_name != st.session_state.name:
                 Some analyses will not be available. 
                 If you change your mind at any point, return to this page to enter your Twitter username.
                 """)
+        st.session_state.last_name = st.session_state.name
 
             
         
