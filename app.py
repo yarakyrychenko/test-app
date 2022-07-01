@@ -93,9 +93,6 @@ if st.session_state.name != "":
             st.session_state.last_name = st.session_state.name
 
 
-    if st.session_state.last_name != st.session_state.name or  st.session_state.last_username_mine != st.session_state.username_mine:
-        st.experimental_rerun()
-
             
         
                         
