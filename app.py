@@ -26,18 +26,19 @@ st.session_state.username_mine = st.radio(
 
 
 if "last_name" not in st.session_state:
-     st.session_state.last_name = ""
-     st.session_state.open_form = True
+    st.session_state.last_name = ""
+    st.session_state.open_form = True
+    st.session_state.rep_words = ", , , , , "
+    st.session_state.submitted = False
  
 
 if st.session_state.last_name != st.session_state.name:  
-    st.session_state.rep_words = ", , , , , "
-    st.session_state.open_form = True
-    st.session_state.submitted = False
 
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
             with st.container():
+                st.warning("Please fill out every field of the form to enable the submit button.")
+
                 dem_words, rep_words = [], []
                 st.markdown("#### Please add five words that describe Democrats best")
                 for i in range(5):
@@ -59,13 +60,14 @@ if st.session_state.last_name != st.session_state.name:
                     ('Independant','Republican', 'Democrat')) 
 
                 def submit():
-                    if (st.session_state.rep_words[-2:] != ", "):
-                        st.session_state.open_form = False
-                        st.session_state.submitted = True   
-                    else:
-                        st.error("Please fill out every field of the form and submit again.")
-                                
-                st.button("Submit", on_click=submit)
+                    st.session_state.open_form = False
+                    st.session_state.submitted = True   
+                disable = True if (st.session_state.rep_words[-2:] != ", ") else False    
+
+                if disable:  
+                    st.warning("Please fill out every field of the form to enable the submit button.")              
+                elif not disable:
+                    st.button("Submit", on_click=submit, disabled=disable)
 
         else:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
