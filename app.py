@@ -68,7 +68,7 @@ if st.session_state.last_name != st.session_state.name:
     
             
 
-    if st.session_state.submitted and not st.session_state.open_form:
+if st.session_state.submitted and not st.session_state.open_form:
         from helper import connect_to_gsheets, insert_user_data
         from datetime import datetime
         from uuid import uuid4
@@ -93,7 +93,7 @@ if st.session_state.last_name != st.session_state.name:
         st.markdown(f"👉 Click 'Polarization' to find out how {st.session_state.name} and others think and talk about the US political parties.")
                         
 
-    if st.session_state.username_mine == 'This username is belongs to someone else.' and st.session_state.name != "":
+if st.session_state.username_mine == 'This username is belongs to someone else.' and st.session_state.name != "":
         st.session_state.conn = connect(":memory:", 
                     adapter_kwargs = {
                         "gsheetsapi": { 
