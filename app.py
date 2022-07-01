@@ -36,7 +36,7 @@ if st.session_state.last_name != st.session_state.name:
 
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
-            with container:
+            with st.expander("Form"):
 
                 with st.form("my_form"):
                     dem_words = []
