@@ -12,7 +12,7 @@ st.set_page_config(
 st.title("Language and Identity on Twitter") 
 #st.subheader("See multiple linguistic Twitter analysis.")
 with st.expander("Consent", expanded=True):
-    st.warning("""
+    st.markdown("""
            By submitting the form below you agree to your data being used for research. 
            Your twitter username will be stored in a private google sheet and will not be shared with anyone (unless extraordinary circumstances force us to share it). 
            You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
@@ -30,10 +30,11 @@ if "last_name" not in st.session_state:
     st.session_state.open_form = True
     st.session_state.submitted = False
     st.session_state.disable = True 
+    st.session_state.last_username_mine = ""
  
 
 if st.session_state.last_name != st.session_state.name:  
-
+    st.session_state.last_username_mine = st.session_state.username_mine
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
             with st.container():
@@ -79,6 +80,10 @@ if st.session_state.last_name != st.session_state.name:
                         )
             #insert_user_data(conn, st.secrets["private_gsheets_url"])
             st.session_state.last_name = st.session_state.name
+
+            if st.session_state.last_name != st.session_state.name or  st.session_state.last_username_mine != st.session_state.username_mine:
+                st.experimental_rerun()
+            
            
     
     elif st.session_state.username_mine == 'This username is belongs to someone else.':
@@ -94,6 +99,9 @@ if st.session_state.last_name != st.session_state.name:
                 If you change your mind at any point, return to this page to enter your Twitter username.
                 """)
         st.session_state.last_name = st.session_state.name
+
+        if st.session_state.last_name != st.session_state.name or  st.session_state.last_username_mine != st.session_state.username_mine:
+            st.experimental_rerun()
 
             
         
