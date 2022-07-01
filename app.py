@@ -19,17 +19,23 @@ st.session_state.username_mine = st.radio(
             "I confirm that",
             ('This username belongs to me.', 'This username is belongs to someone else.')) 
 
-container = st.container()   
+
 
 if "last_name" not in st.session_state:
-        st.session_state.last_name = ""
+     st.session_state.last_name = ""
+
+if "open_form" not in st.session_state:
+    st.session_state.open_form = True
+
+container = st.container()   
 
 if st.session_state.last_name != st.session_state.name:     
 
-    
-    if "submitted" not in st.session_state:
-        with container:
-            if st.session_state.username_mine == 'This username belongs to me.':
+    container = st.container()   
+
+    if st.session_state.username_mine == 'This username belongs to me.':
+        if st.session_state.open_form:
+            with container:
 
                 with st.form("my_form"):
                     dem_words = []
@@ -54,6 +60,7 @@ if st.session_state.last_name != st.session_state.name:
                     ('Independant','Republican', 'Democrat')) 
     
                     st.session_state.submitted = st.form_submit_button("Submit")
+                    st.session_state.open_form = False
 
     elif st.session_state.submitted:
         with container:
