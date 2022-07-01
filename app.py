@@ -37,7 +37,6 @@ if st.session_state.last_name != st.session_state.name:
 
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
-            st.session_state.rep_words = ", , , , , "
             with st.container():
                 dem_words, rep_words = [], []
                 st.markdown("#### Please add five words that describe Democrats best")
