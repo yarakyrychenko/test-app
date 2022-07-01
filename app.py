@@ -11,7 +11,8 @@ st.set_page_config(
 
 st.title("Language and Identity on Twitter") 
 #st.subheader("See multiple linguistic Twitter analysis.")
-st.warning("""
+with st.expander("Consent", expanded=True):
+    st.warning("""
            By submitting the form below you agree to your data being used for research. 
            Your twitter username will be stored in a private google sheet and will not be shared with anyone (unless extraordinary circumstances force us to share it). 
            You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
@@ -36,7 +37,7 @@ if st.session_state.last_name != st.session_state.name:
 
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
-            with st.form("my_form"):
+            with st.expander("Form",expanded=True):
                 dem_words, rep_words = [], []
                 st.markdown("#### Please add five words that describe Democrats best")
                 for i in range(5):
@@ -64,10 +65,9 @@ if st.session_state.last_name != st.session_state.name:
                         st.session_state.submitted = True   
                     else:
                         st.error("Please fill out every field of the form and submit again.")
-                        st.form_submit_button("Submit", on_click=submit)
-                        
-                st.form_submit_button("Submit", on_click=submit)
-        else:
+                                
+                st.button("Submit", on_click=submit)
+        if not st.session_state.open_form:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
             st.success("Thanks for submitting your answers!")
             st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
@@ -81,8 +81,6 @@ if st.session_state.last_name != st.session_state.name:
                         )
             #insert_user_data(conn, st.secrets["private_gsheets_url"])
            
-
-
     
     elif st.session_state.username_mine == 'This username is belongs to someone else.':
         st.session_state.conn = connect(":memory:", 
