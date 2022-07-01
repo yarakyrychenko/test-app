@@ -58,25 +58,28 @@ if st.session_state.last_name != st.session_state.name:
                 def submit():
                     if (st.session_state.rep_words[-2:] != ", "):
                         st.session_state.open_form = False
-                        st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
-                        st.success("Thanks for submitting your answers!")
-                        st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
+                        st.session_state.last_name = st.session_state.name
+                        st.session_state.submitted = True   
+                    else:
+                        st.error("Please fill out every field of the form and submit again.")
+                        st.form_submit_button("Submit", on_click=submit)
                         
-                        st.session_state.conn = connect(":memory:", 
+                st.form_submit_button("Submit", on_click=submit)
+        else:
+            st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
+            st.success("Thanks for submitting your answers!")
+            st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
+                        
+            st.session_state.conn = connect(":memory:", 
                             adapter_kwargs = {
                             "gsheetsapi": { 
                             "service_account_info":  st.secrets["gcp_service_account"] 
                                     }
                                         }
                         )
-                        #insert_user_data(conn, st.secrets["private_gsheets_url"])
-                        st.session_state.last_name = st.session_state.name
-                        st.session_state.submitted = True   
-                    else:
-                        st.error("Please fill out every field of the form and submit again.")
-   
-                st.form_submit_button("Submit", on_click=submit)
-                 
+            #insert_user_data(conn, st.secrets["private_gsheets_url"])
+           
+
 
     
     elif st.session_state.username_mine == 'This username is belongs to someone else.':
