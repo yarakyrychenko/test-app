@@ -57,7 +57,7 @@ if st.session_state.last_name != st.session_state.name:
                      "How do you identify?",
                     ('Independant','Republican', 'Democrat')) 
                 st.session_state.all_filled = True if st.session_state.R5 != "" else False
-                st.write(st.session_state.R5 != "")
+                st.write(st.session_state.all_filled)
 
                 def submit():
                     st.session_state.open_form = False
