@@ -32,7 +32,7 @@ st.session_state.last_username_mine = ""
 
 if st.session_state.name != "":  
     st.session_state.last_username_mine = st.session_state.username_mine
-    if st.session_state.username_mine == 'This username belongs to me.':
+    while st.session_state.username_mine == 'This username belongs to me.':
         form = st.expander("Form",expanded=st.session_state.submitted)
         dem_words, rep_words = [], []
         form.markdown("#### Please add five words that describe Democrats best")
@@ -61,7 +61,7 @@ if st.session_state.name != "":
         form.button("Submit", on_click=submit, disabled=st.session_state.disable)
 
         with st.expander("Submission",expanded=True):
-            if st.session_state.submitted:
+            while st.session_state.submitted:
                 st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
                 st.success("Thanks for submitting your answers!")
                 st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
@@ -77,7 +77,7 @@ if st.session_state.name != "":
                 st.session_state.last_name = st.session_state.name
                       
     
-    if st.session_state.username_mine == 'This username is belongs to someone else.':
+    while st.session_state.username_mine == 'This username is belongs to someone else.':
         with st.expander("Thank you", expanded=True):
             st.session_state.conn = connect(":memory:", 
                     adapter_kwargs = {
