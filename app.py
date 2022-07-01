@@ -30,6 +30,7 @@ if "last_name" not in st.session_state:
     st.session_state.open_form = True
     st.session_state.rep_words = ", , , , , "
     st.session_state.submitted = False
+    st.session_state.disable = True if (st.session_state.rep_words[-2:] != ", ") else False   
  
 
 if st.session_state.last_name != st.session_state.name:  
@@ -63,13 +64,10 @@ if st.session_state.last_name != st.session_state.name:
                 def submit():
                     st.session_state.open_form = False
                     st.session_state.submitted = True 
-                      
-                disable = True if (st.session_state.rep_words[-2:] != ", ") else False    
-
-                if disable:  
-                    st.warning("Please fill out every field of the form to enable the submit button.")              
-                elif not disable:
-                    st.button("Submit", on_click=submit, disabled=disable)
+ 
+                st.warning("Please fill out every field of the form to enable the submit button.")              
+                if not st.session_state.disable:
+                    st.button("Submit", on_click=submit, disabled=st.session_state.disable)
 
         else:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
