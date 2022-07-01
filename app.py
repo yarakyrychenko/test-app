@@ -26,11 +26,13 @@ st.session_state.username_mine = st.radio(
 
 if "last_name" not in st.session_state:
      st.session_state.last_name = ""
-     st.session_state.submitted = False
      st.session_state.open_form = True
  
 
 if st.session_state.last_name != st.session_state.name:  
+    st.session_state.rep_words = ", , , , , "
+    st.session_state.open_form = True
+    st.session_state.submitted = False
 
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
