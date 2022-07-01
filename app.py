@@ -29,7 +29,8 @@ if "open_form" not in st.session_state:
 
 container = st.container()   
 
-if st.session_state.last_name != st.session_state.name:     
+if st.session_state.last_name != st.session_state.name:  
+    st.session_state.last_name = st.session_state.name
 
     container = st.container()   
 
@@ -58,21 +59,20 @@ if st.session_state.last_name != st.session_state.name:
                     st.session_state.party = st.radio(
                      "How do you identify?",
                     ('Independant','Republican', 'Democrat')) 
-    
-                    st.session_state.submitted = st.form_submit_button("Submit")
-                    st.session_state.open_form = False
+
+                    if (st.session_state.rep_words[-2:] != ", "):
+                        st.session_state.submitted = st.form_submit_button("Submit")
+                        st.session_state.open_form = False
             
 
-if st.session_state.submitted:
-        with container:
-            if (st.session_state.rep_words[-2:] != ", "):
-                from helper import connect_to_gsheets, insert_user_data
-                from datetime import datetime
-                from uuid import uuid4
+    if st.session_state.submitted:
+        from helper import connect_to_gsheets, insert_user_data
+        from datetime import datetime
+        from uuid import uuid4
 
                 
-                st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
-                st.session_state.conn = connect(":memory:", 
+        st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
+        st.session_state.conn = connect(":memory:", 
                         adapter_kwargs = {
                     "gsheetsapi": { 
                         "service_account_info":  st.secrets["gcp_service_account"] 
@@ -80,20 +80,20 @@ if st.session_state.submitted:
                                         }
                     )
 
-                insert_user_data(conn, st.secrets["private_gsheets_url"])
+        #insert_user_data(conn, st.secrets["private_gsheets_url"])
 
-                st.markdown("### Thanks for submitting your answers!")
-                st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
-                st.success("Open the sidebar and navigate to 'Linguistic Analysis' or  'Polarization' to see your results.")
+        st.markdown("### Thanks for submitting your answers!")
+        st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
+        st.success("Open the sidebar and navigate to 'Linguistic Analysis' or  'Polarization' to see your results.")
 
-                st.markdown(f"👉 Click 'Linguistic Analysis' to find out what language {st.session_state.name} and others use on Twitter.")
-                st.markdown(f"👉 Click 'Polarization' to find out how {st.session_state.name} and others think and talk about the US political parties.")
+        st.markdown(f"👉 Click 'Linguistic Analysis' to find out what language {st.session_state.name} and others use on Twitter.")
+        st.markdown(f"👉 Click 'Polarization' to find out how {st.session_state.name} and others think and talk about the US political parties.")
                         
 
-            else:
-                st.error("Please fill out every field and try again.")
+    else:
+        st.error("Please fill out every field of the form first.")
 
-if st.session_state.username_mine == 'This username is belongs to someone else.' and st.session_state.name != "":
+    if st.session_state.username_mine == 'This username is belongs to someone else.' and st.session_state.name != "":
         st.session_state.conn = connect(":memory:", 
                     adapter_kwargs = {
                         "gsheetsapi": { 
