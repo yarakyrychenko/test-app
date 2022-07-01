@@ -1,6 +1,6 @@
 import streamlit as st
 from shillelagh.backends.apsw.db import connect
-from helper import connect_to_gsheets, insert_user_data
+#from helper import connect_to_gsheets, insert_user_data
 from datetime import datetime
 from uuid import uuid4
 
