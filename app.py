@@ -15,6 +15,9 @@ st.warning("""
            """)
 
 st.text_input("Enter a twitter username to begin", key="name")
+st.session_state.username_mine = st.radio(
+            "I confirm that",
+            ('This username belongs to me.', 'This username is belongs to someone else.')) 
 
 container = st.container()   
 
@@ -23,9 +26,6 @@ if "last_name" not in st.session_state:
 
 if st.session_state.last_name != st.session_state.name:     
 
-    st.session_state.username_mine = st.radio(
-            "I confirm that",
-            ('This username belongs to me.', 'This username is belongs to someone else.')) 
     
     if "submitted" not in st.session_state:
         with container:
