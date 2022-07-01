@@ -73,10 +73,8 @@ if st.session_state.last_name != st.session_state.name:
                         st.session_state.last_name = st.session_state.name
                         st.session_state.submitted = True   
                     else:
-                        with container:
-                            st.warning("Please fill out every field of the form and submit again.")
-
-                container = st.container()     
+                        st.error("Please fill out every field of the form and submit again.")
+   
                 st.form_submit_button("Submit", on_click=submit)
                  
 
