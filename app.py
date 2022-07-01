@@ -14,6 +14,16 @@ st.warning("""
            You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
            """)
 
+container = st.beta_container()
+st.sidebar.write("Hello")
+expander = st.beta_expander("Expand me")
+with expander:
+    st.write("Oh noes")
+   
+if st.slider("Slide me", 0, 100, step=1) == 100:
+    with container:
+        st.write("I am in a container")
+
 st.text_input("Enter a twitter username to begin", key="name")
 
 if "last_name" not in st.session_state:
