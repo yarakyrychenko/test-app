@@ -16,14 +16,13 @@ st.warning("""
 
 container = st.container()
 st.sidebar.write("Hello")
-expander = st.expander("Expand me")
-with expander:
-    st.write("Oh noes")
    
 if st.slider("Slide me", 0, 100, step=1) == 100:
     with container:
-        st.write("I am in a container")
-
+        expander = st.expander("Expand me")
+        with expander:
+            st.write("Oh noes")
+            
 st.text_input("Enter a twitter username to begin", key="name")
 
 if "last_name" not in st.session_state:
