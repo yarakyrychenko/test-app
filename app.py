@@ -61,8 +61,9 @@ if st.session_state.last_name != st.session_state.name:
     
                     st.session_state.submitted = st.form_submit_button("Submit")
                     st.session_state.open_form = False
+            
 
-    elif st.session_state.submitted:
+if st.session_state.submitted:
         with container:
             if (st.session_state.rep_words[-2:] != ", "):
                 from helper import connect_to_gsheets, insert_user_data
@@ -92,7 +93,7 @@ if st.session_state.last_name != st.session_state.name:
             else:
                 st.error("Please fill out every field and try again.")
 
-    if st.session_state.username_mine == 'This username is belongs to someone else.' and st.session_state.name != "":
+if st.session_state.username_mine == 'This username is belongs to someone else.' and st.session_state.name != "":
         st.session_state.conn = connect(":memory:", 
                     adapter_kwargs = {
                         "gsheetsapi": { 
