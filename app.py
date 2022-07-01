@@ -14,9 +14,9 @@ st.warning("""
            You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
            """)
 
-container = st.container()   
-
 st.text_input("Enter a twitter username to begin", key="name")
+
+container = st.container()   
 
 if "last_name" not in st.session_state:
         st.session_state.last_name = ""
