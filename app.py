@@ -61,19 +61,20 @@ if st.session_state.name != "":
         form.button("Submit", on_click=submit, disabled=st.session_state.disable)
 
         with st.expander("Submission",expanded=True):
-            st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
-            st.success("Thanks for submitting your answers!")
-            st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
+            if st.session_state.submitted:
+                st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
+                st.success("Thanks for submitting your answers!")
+                st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
                         
-            st.session_state.conn = connect(":memory:", 
+                st.session_state.conn = connect(":memory:", 
                             adapter_kwargs = {
                             "gsheetsapi": { 
                             "service_account_info":  st.secrets["gcp_service_account"] 
                                     }
                                         }
                         )
-            #insert_user_data(conn, st.secrets["private_gsheets_url"])
-            st.session_state.last_name = st.session_state.name
+                #insert_user_data(conn, st.secrets["private_gsheets_url"])
+                st.session_state.last_name = st.session_state.name
                       
     
     if st.session_state.username_mine == 'This username is belongs to someone else.':
