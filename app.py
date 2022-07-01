@@ -33,7 +33,6 @@ if "last_name" not in st.session_state:
 container = st.container()   
 
 if st.session_state.last_name != st.session_state.name:  
-    st.session_state.last_name = st.session_state.name
 
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
@@ -73,6 +72,7 @@ if st.session_state.last_name != st.session_state.name:
                                         }
                         )
                         #insert_user_data(conn, st.secrets["private_gsheets_url"])
+                        st.session_state.last_name = st.session_state.name
                         st.session_state.submitted = True   
                     else:
                         st.error("Please fill out every field of the form and submit again.")
