@@ -21,11 +21,11 @@ st.session_state.username_mine = st.radio(
 
 
 
-if "last_name" not in st.session_state:
+if "last_name","open_form","submitted" not in st.session_state:
      st.session_state.last_name = ""
+     st.session_state.submitted = False
+     st.session_state.open_form = True
 
-if "open_form" not in st.session_state:
-    st.session_state.open_form = True
 
 container = st.container()   
 
