@@ -24,16 +24,14 @@ st.session_state.username_mine = st.radio(
             ('This username belongs to me.', 'This username is belongs to someone else.')) 
 
 
-
-if "last_name" not in st.session_state:
-    st.session_state.last_name = ""
-    st.session_state.open_form = True
-    st.session_state.submitted = False
-    st.session_state.disable = True 
-    st.session_state.last_username_mine = ""
+st.session_state.last_name = ""
+st.session_state.open_form = True
+st.session_state.submitted = False
+st.session_state.disable = True 
+st.session_state.last_username_mine = ""
  
 
-if st.session_state.last_name != st.session_state.name:  
+if st.session_state.name != "":  
     st.session_state.last_username_mine = st.session_state.username_mine
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
@@ -99,7 +97,7 @@ if st.session_state.last_name != st.session_state.name:
                 If you change your mind at any point, return to this page to enter your Twitter username.
                 """)
         st.session_state.last_name = st.session_state.name
-
+        
         if st.session_state.last_name != st.session_state.name or  st.session_state.last_username_mine != st.session_state.username_mine:
             st.experimental_rerun()
 
