@@ -36,6 +36,7 @@ if st.session_state.last_name != st.session_state.name:
 
     if st.session_state.username_mine == 'This username belongs to me.':
         if st.session_state.open_form:
+            st.session_state.rep_words = ", , , , , "
             with st.container():
                 st.warning("Please fill out every field of the form to enable the submit button.")
 
@@ -61,7 +62,8 @@ if st.session_state.last_name != st.session_state.name:
 
                 def submit():
                     st.session_state.open_form = False
-                    st.session_state.submitted = True   
+                    st.session_state.submitted = True 
+                      
                 disable = True if (st.session_state.rep_words[-2:] != ", ") else False    
 
                 if disable:  
