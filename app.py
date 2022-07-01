@@ -34,7 +34,6 @@ if st.session_state.name != "":
     st.session_state.last_username_mine = st.session_state.username_mine
     if st.session_state.username_mine == 'This username belongs to me.':
         form = st.expander("Form",expanded= not st.session_state.submitted)
-        form
         dem_words, rep_words = [], []
         form.markdown("#### Please add five words that describe Democrats best")
         for i in range(5):
@@ -57,7 +56,6 @@ if st.session_state.name != "":
 
         def submit():
             st.session_state.submitted = True 
-            form
  
         form.warning("Please fill out every field of the form to enable the submit button.")              
         form.button("Submit", on_click=submit, disabled=st.session_state.disable)
