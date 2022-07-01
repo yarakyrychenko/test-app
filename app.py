@@ -67,7 +67,7 @@ if st.session_state.last_name != st.session_state.name:
                                 
                 st.button("Submit", on_click=submit)
 
-        if not st.session_state.open_form:
+        else:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
             st.success("Thanks for submitting your answers!")
             st.markdown(f"Your app ID is {st.session_state.id}. Note it down and email us if you want your answers deleted.") 
