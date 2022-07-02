@@ -32,7 +32,7 @@ st.session_state.last_username_mine = ""
 
 if st.session_state.name != "":  
     st.session_state.last_username_mine = st.session_state.username_mine
-    while st.session_state.username_mine == 'This username belongs to me.':
+    if st.session_state.username_mine == 'This username belongs to me.':
         form = st.expander("Form",expanded=st.session_state.submitted)
         dem_words, rep_words = [], []
         form.markdown("#### Please add five words that describe Democrats best")
@@ -77,7 +77,7 @@ if st.session_state.name != "":
                 st.session_state.last_name = st.session_state.name
                       
     
-    while st.session_state.username_mine == 'This username is belongs to someone else.':
+    if st.session_state.username_mine == 'This username is belongs to someone else.':
         with st.expander("Thank you", expanded=True):
             st.session_state.conn = connect(":memory:", 
                     adapter_kwargs = {
