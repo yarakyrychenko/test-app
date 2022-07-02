@@ -24,6 +24,13 @@ with placeholder.container():
 
 if agree:
     placeholder.empty()
+    with st.expander("Consent", expanded=False):
+        st.markdown("""
+           By submitting the form below you agree to your data being used for research. 
+           Your twitter username will be stored in a private google sheet and will not be shared with anyone (unless extraordinary circumstances force us to share it). 
+           You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
+           """)
+        st.markdown("You have consented.")
     
 st.text_input("Enter a twitter username to begin", key="name")
 st.session_state.username_mine = st.radio(
@@ -36,7 +43,7 @@ st.session_state.disable = True
 if st.session_state.username_mine == 'This username belongs to me.':
     form_place = st.empty()
     with form_place.container():
-        form = st.expander("Form",expanded=st.session_state.submitted)
+        form = st.expander("Form",expanded=True)
         dem_words, rep_words = [], []
         form.markdown("#### Please add five words that describe Democrats best")
         for i in range(5):
@@ -61,8 +68,8 @@ if st.session_state.username_mine == 'This username belongs to me.':
         st.session_state.submitted = form.button("Submit", disabled=st.session_state.disable)
     if  st.session_state.submitted:
         form_place.empty()
-        
-    with st.expander("Submission",expanded=True):
+
+    with st.expander("Thank you",expanded=True):
         if st.session_state.submitted:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
             st.success("Thanks for submitting your answers!")
@@ -88,7 +95,7 @@ if st.session_state.username_mine == 'This username is belongs to someone else.'
                                     }
                                         }
                     )
-        st.warning("""You entered someone else's Twitter username. 
+        st.makrdown("""You entered someone else's Twitter username. 
                 Some analyses will not be available. 
                 If you change your mind at any point, return to this page to enter your Twitter username.
                 """)
