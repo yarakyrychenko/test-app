@@ -26,6 +26,7 @@ st.session_state.username_mine = st.radio(
             ('This username belongs to me.', 'This username is belongs to someone else.')) 
 
 st.session_state.submitted = False
+st.session_state.ext
 st.session_state.disable = True 
 
 if st.session_state.username_mine == 'This username belongs to me.':
