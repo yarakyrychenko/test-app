@@ -20,7 +20,7 @@ with placeholder.container():
            Your twitter username will be stored in a private google sheet and will not be shared with anyone (unless extraordinary circumstances force us to share it). 
            You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
            """)
-        agree = st.checkbox("I agree")
+        agree = st.checkbox("I understand and consent.")
 
 if agree:
     placeholder.empty()
@@ -32,15 +32,16 @@ if agree:
            """)
         st.markdown("You have consented.")
     
-st.text_input("Enter a twitter username to begin", key="name")
-st.session_state.username_mine = st.radio(
+    st.text_input("Enter a twitter username to begin", key="name")
+    st.session_state.username_mine = st.radio(
             "I confirm that",
             ('This username belongs to me.', 'This username is belongs to someone else.')) 
+
 
 st.session_state.submitted = False
 st.session_state.disable = True 
 
-if st.session_state.username_mine == 'This username belongs to me.':
+if st.session_state.username_mine == 'This username belongs to me.' and agree:
     form_place = st.empty()
     with form_place.container():
         form = st.expander("Form",expanded=True)
