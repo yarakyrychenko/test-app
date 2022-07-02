@@ -95,7 +95,7 @@ if st.session_state.username_mine == 'This username is belongs to someone else.'
                                     }
                                         }
                     )
-        st.makrdown("""You entered someone else's Twitter username. 
+        st.markdown("""You entered someone else's Twitter username. 
                 Some analyses will not be available. 
                 If you change your mind at any point, return to this page to enter your Twitter username.
                 """)
