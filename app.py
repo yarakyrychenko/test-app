@@ -9,10 +9,9 @@ st.set_page_config(
     page_icon=""
 )
 
-st.session_state.submitted = True
 st.title("Language and Identity on Twitter") 
 #st.subheader("See multiple linguistic Twitter analysis.")
-st.session_state.ext = st.expander("Consent", expanded=st.session_state.submitted)
+
 placeholder = st.empty()
 with placeholder.container():
     with st.expander("Consent", expanded=True):
@@ -37,30 +36,34 @@ with st.session_state.ext:
 st.session_state.disable = True 
 
 if st.session_state.username_mine == 'This username belongs to me.':
-    form = st.expander("Form",expanded=st.session_state.submitted)
-    dem_words, rep_words = [], []
-    form.markdown("#### Please add five words that describe Democrats best")
-    for i in range(5):
-        dem_words.append(form.text_input("D"+str(i+1)))
-    st.session_state.dem_words = ", ".join(dem_words).lower()
-    form.markdown("#### Please add five words that describe Republicans best")
-    for i in range(5):
-        rep_words.append(form.text_input("R"+str(i+1),key = "R"+str(i+1)))
-    st.session_state.rep_words = ", ".join(rep_words).lower()
+    form_place = st.empty()
+    with form_place.container():
+        form = st.expander("Form",expanded=st.session_state.submitted)
+        dem_words, rep_words = [], []
+        form.markdown("#### Please add five words that describe Democrats best")
+        for i in range(5):
+            dem_words.append(form.text_input("D"+str(i+1)))
+        st.session_state.dem_words = ", ".join(dem_words).lower()
+        form.markdown("#### Please add five words that describe Republicans best")
+        for i in range(5):
+            rep_words.append(form.text_input("R"+str(i+1),key = "R"+str(i+1)))
+        st.session_state.rep_words = ", ".join(rep_words).lower()
 
-    form.markdown("#### Feeling Thermomether")
-    form.slider("How warm do you feel about Democrats (0 = coldest rating; 100 = warmest rating)?", 
+        form.markdown("#### Feeling Thermomether")
+        form.slider("How warm do you feel about Democrats (0 = coldest rating; 100 = warmest rating)?", 
                     min_value=0, max_value=100, value=50, step=1,key="dem_temp")          
-    form.slider("How warm do you feel about Republicans (0 = coldest rating; 100 = warmest rating)?", 
+        form.slider("How warm do you feel about Republicans (0 = coldest rating; 100 = warmest rating)?", 
                         min_value=0, max_value=100, value=50, step=1,key="rep_temp") 
-    st.session_state.party = form.radio(
+        st.session_state.party = form.radio(
                      "How do you identify?",
                     ('Independant','Republican', 'Democrat')) 
-    st.session_state.disable = True if st.session_state.R5 == "" else False
+        st.session_state.disable = True if st.session_state.R5 == "" else False
  
-    form.warning("Please fill out every field of the form to enable the submit button.")              
-    st.session_state.submitted = form.button("Submit", disabled=st.session_state.disable)
-
+        form.warning("Please fill out every field of the form to enable the submit button.")              
+        st.session_state.submitted = form.button("Submit", disabled=st.session_state.disable)
+    if  st.session_state.submitted:
+        form_place.empty()
+        
     with st.expander("Submission",expanded=True):
         if st.session_state.submitted:
             st.session_state.id = datetime.now().strftime('%Y%m-%d%H-%M-') + str(uuid4())
