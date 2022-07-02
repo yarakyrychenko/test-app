@@ -13,12 +13,21 @@ st.session_state.submitted = True
 st.title("Language and Identity on Twitter") 
 #st.subheader("See multiple linguistic Twitter analysis.")
 st.session_state.ext = st.expander("Consent", expanded=st.session_state.submitted)
-with st.session_state.ext:
-    st.markdown("""
+if st.session_state.submitted:
+    with st.expander("Consent", expanded=True):
+        st.markdown("""
            By submitting the form below you agree to your data being used for research. 
            Your twitter username will be stored in a private google sheet and will not be shared with anyone (unless extraordinary circumstances force us to share it). 
            You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
            """)
+else:
+    with st.expander("Consent", expanded=False):
+        st.markdown("""
+           By submitting the form below you agree to your data being used for research. 
+           Your twitter username will be stored in a private google sheet and will not be shared with anyone (unless extraordinary circumstances force us to share it). 
+           You can ask for your data to be deleted by emailing us with an app ID number you'll be issued after submitting the form. 
+           """)
+
 
 st.text_input("Enter a twitter username to begin", key="name")
 st.session_state.username_mine = st.radio(
