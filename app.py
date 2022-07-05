@@ -1,7 +1,7 @@
 import streamlit as st
 from shillelagh.backends.apsw.db import connect
 from helper import *
-import datetime
+from datetime import datetime
 from uuid import uuid4
 import seaborn as sns 
 import pandas as pd
@@ -16,7 +16,7 @@ def load_lottieurl(url):
     return r.json()
 
 st.set_page_config(
-    page_title="US Polarization",
+    page_title="🇺🇸🔥 The US. Polarized.",
     page_icon="🔥",
     layout="wide",
     menu_items={
@@ -60,7 +60,7 @@ if agree:
     form_place = st.empty()
     with form_place.container():
         form = st.expander("Form",expanded=True)
-        form.text_input("Enter a twitter username to begin", key="name", placeholder="e.g. POTUS", value="POTUS")
+        form.text_input("Enter a twitter username to begin", key="name", placeholder="e.g. POTUS", value="")
         st.session_state.username_mine = form.radio(
             "I confirm that",
             ('This username belongs to me.', 'This username is belongs to someone else.')) 
