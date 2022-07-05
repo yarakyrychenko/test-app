@@ -29,7 +29,7 @@ sns.set_palette("vlag")
 lottie_tweet = load_lottieurl('https://assets3.lottiefiles.com/packages/lf20_t2xm9bsw.json')
 st_lottie(lottie_tweet, speed=1, height=200, key="initial")
 
-st.title("US Twitter Polarization") 
+st.title("🇺🇸🔥 The US. Polarized.") 
 st.subheader("""Discover what the two parties think about each other.""")
 
 placeholder = st.empty()
