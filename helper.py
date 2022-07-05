@@ -9,7 +9,6 @@ def insert_user_data(conn, sheet_url):
             """
     conn.execute(insert)
 
-@st.cache
 def make_dataframe(executed_query):
     import pandas as pd 
     df = pd.DataFrame(executed_query.fetchall())
@@ -17,7 +16,6 @@ def make_dataframe(executed_query):
     df = df.drop(["id","twitter_username"],axis=1)
     return df
 
-@st.cache
 def make_v_wordcloud(data):
     import collections
 
@@ -58,7 +56,6 @@ def make_v_wordcloud(data):
     
     return fig
 
-@st.cache
 def make_twitter_button():
     import st.components.v1 as components
     return components.html(
