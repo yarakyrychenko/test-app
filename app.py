@@ -8,7 +8,7 @@ import pandas as pd
 
 from streamlit_lottie import st_lottie
 import requests
-@st.cache
+
 def load_lottieurl(url):
     r = requests.get(url)
     if r.status_code != 200:
