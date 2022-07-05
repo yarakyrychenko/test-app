@@ -5,3 +5,5 @@ matplotlib-venn-wordcloud
 matplotlib
 pandas
 google-auth>=1.23.0,<2
+seaborn
+streamlit-lottie

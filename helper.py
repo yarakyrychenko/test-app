@@ -1,15 +1,15 @@
 import streamlit as st
 from shillelagh.backends.apsw.db import connect
 
-def insert_user_data(conn, sheet_url):
 
+def insert_user_data(conn, sheet_url):
     insert = f"""
-            INSERT INTO "{sheet_url}" (id, twitter_username, party, dem_words, rep_words, dem_temp, rep_temp)
-            VALUES ("{st.session_state.id}", "{st.session_state.name}", "{st.session_state.party}", "{st.session_state.dem_words}", "{st.session_state.rep_words}", "{st.session_state.dem_temp}","{st.session_state.rep_temp}")
+            INSERT INTO "{sheet_url}" (id, twitter_username, party, dem_words, rep_words, dem_temp, rep_temp, username_mine)
+            VALUES ("{st.session_state.id}", "{st.session_state.name}", "{st.session_state.party}", "{st.session_state.dem_words}", "{st.session_state.rep_words}", "{st.session_state.dem_temp}","{st.session_state.rep_temp}","{st.session_state.username_mine}")
             """
     conn.execute(insert)
 
-
+@st.cache
 def make_dataframe(executed_query):
     import pandas as pd 
     df = pd.DataFrame(executed_query.fetchall())
@@ -17,8 +17,12 @@ def make_dataframe(executed_query):
     df = df.drop(["id","twitter_username"],axis=1)
     return df
 
-def make_v_wordcloud(all_dem_words, all_rep_words):
+@st.cache
+def make_v_wordcloud(data):
     import collections
+
+    all_dem_words = list(data.query("party=='Republican'").dem_words)
+    all_rep_words = list(data.query("party=='Democrat'").rep_words)
 
     all_dem_words = ", ".join(all_dem_words)
     all_rep_words = ", ".join(all_rep_words)
@@ -37,7 +41,7 @@ def make_v_wordcloud(all_dem_words, all_rep_words):
 
     fig, ax = plt.subplots(figsize=(15,12))
 
-    ax.set_title('Words People Think Describe Republicans and Democrats', fontsize=20)
+    ax.set_title('Words People Think Describe The Other Party', fontsize=20)
     v = venn2_wordcloud([set(all_rep_words), set(all_dem_words)],
                     set_colors=['red', 'blue'],
                     set_edgecolors=['w', 'w'],
@@ -54,6 +58,7 @@ def make_v_wordcloud(all_dem_words, all_rep_words):
     
     return fig
 
+@st.cache
 def make_twitter_button():
     import st.components.v1 as components
     return components.html(
